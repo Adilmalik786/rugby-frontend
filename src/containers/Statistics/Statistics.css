@@ -1,0 +1,8 @@
+.Statistics{
+   /*display: flex;*/
+   /* align-items: center;*/
+    margin-top: 60px;
+    margin-left: 20px;
+    display: inline-block;
+    vertical-align: center;
+}

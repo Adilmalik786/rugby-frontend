@@ -1,0 +1,21 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    /*margin-left: 30px;*/
+}
+td {
+    padding: 5px;
+    text-align: center;
+}
+
+th {
+    padding: 5px;
+    text-align: center;
+}
+
+.tableStyle{
+    width:100px;
+    margin-right: 20px;
+    margin-top: 30px;
+}
