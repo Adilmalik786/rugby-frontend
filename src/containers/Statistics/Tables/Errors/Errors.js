@@ -1,7 +1,11 @@
-import React from "react";
+import React, {useEffect} from "react";
 import './Errors.css'
 
 const ErrorsTable = (props)=>{
+
+    useEffect(()=>{
+        console.log(props.data)
+    },[props.data]);
     return(
         <table className="tableStyle">
             <tr>
@@ -15,34 +19,17 @@ const ErrorsTable = (props)=>{
                 <th>Total</th>
                 <th>Avg</th>
             </tr>
-            <tr>
-                <th>19/18</th>
-                <td>Bill Gates</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-            </tr>
-            <tr>
-                <th>19/18</th>
-                <td>Bill Gates</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-            </tr>
-            <tr>
-                <th>19/18</th>
-                <td>Bill Gates</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-            </tr>
-            <tr>
-                <th>19/18</th>
-                <td>Bill Gates</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-            </tr>
+            {props.data && props.data.map((item,index) => {
+               return  <tr key={`${item.year}+${item.turnOverCount}+${index}`}>
+                    <th>{item.year}</th>
+                    <td>{item.turnOverCount}</td>
+                    <td>{item.turnOverAverage}</td>
+                    <td>{item.penaltyCount}</td>
+                    <td>{item.penaltyAverage}</td>
+                </tr>
+            })
+            }
+
 
         </table>
     );

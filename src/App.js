@@ -15,7 +15,7 @@ class App extends Component {
     constructor() {
         super();
         this.state = ({
-            stats:null,
+            stats: null,
             position: null,
             usersName: [],
             image: photo,
@@ -24,6 +24,7 @@ class App extends Component {
             age: null,
             height: null,
             weight: null,
+            data: null
 
         })
 
@@ -97,26 +98,65 @@ class App extends Component {
 
     changeDate = (event) => {
         console.log('Date:', event.target.value);
-        this.setState({dob:event.target.value})
+        this.setState({dob: event.target.value})
     }
 
     selectPosition = (event, value, reason) => {
         this.setState({position: value});
         console.log('position:', value);
     }
-    selectStats = (event, value, reason) => {
+    selectStats = async (event, value, reason) => {
         this.setState({stats: value});
-        console.log('stats:', value);
+        console.log('position:', this.state.position);
+        if (value === 'Defence') {
+            console.log('stats:', value);
+            const elem = await axios.get(`http://localhost:5000/api/v1/user/getDefenceTable`, {
+                params: {
+                    playerName: this.state.player,
+                    position: this.state.position
+                }
+            });
+            this.setState({
+                data: Object.values(elem.data.data)
+            })
+            console.log('response:', this.state.data);
+        } else
+        if (value === 'Errors') {
+            console.log('stats:', value);
+            const elem = await axios.get(`http://localhost:5000/api/v1/user/getErrorTable`, {
+                params: {
+                    playerName: this.state.player,
+                    position: this.state.position
+                }
+            });
+            this.setState({
+                data: Object.values(elem.data.data)
+            })
+            console.log('response:', this.state.data);
+        } else if (value === 'SetPiece') {
+            console.log('stats:', value);
+            const elem = await axios.get(`http://localhost:5000/api/v1/user/getPieceTable`, {
+                params: {
+                    playerName: this.state.player,
+                    position: this.state.position
+                }
+            });
+            this.setState({
+                data: Object.values(elem.data.data)
+            })
+            console.log('response:', this.state.data);
+        }
+
     }
 
     changedWidth = (event) => {
-        this.setState({weight:event.target.value});
+        this.setState({weight: event.target.value});
         console.log('width:', event.target.value)
         /*this.setState({weight:event.target.value});
         console.log(this.state.weight);*/
     }
     changedHeight = (event) => {
-        this.setState({height:event.target.value});
+        this.setState({height: event.target.value});
         console.log('height:', event.target.value)
     }
 
@@ -125,7 +165,7 @@ class App extends Component {
 
             <div className="parent">
                 <div className="div1">
-                    <img src={logo}   />
+                    <img src={logo}/>
                 </div>
                 <div className="div2">
                     <PersonForm onSubmitClicked={this.OnSubmit}
@@ -139,11 +179,11 @@ class App extends Component {
                 <div className="div3">
                     <Filters players={this.state.usersName} selectPlayerName={this.selectPlayerName}
                              selectPosition={this.selectPosition}
-                             selectStats ={this.selectStats}
+                             selectStats={this.selectStats}
                     />
                 </div>
                 <div className="div4">
-                    <CustomizedTables name={this.state.stats}/>
+                    <CustomizedTables name={this.state.stats} data={this.state.data}/>
                 </div>
             </div>
         );

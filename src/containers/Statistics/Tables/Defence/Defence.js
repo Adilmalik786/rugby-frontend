@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useEffect} from "react";
 import './Defence.css'
 
 const DefenceTable = (props)=>{
+
     return(
         <table className="tableStyle">
             <tr>
@@ -20,56 +21,18 @@ const DefenceTable = (props)=>{
                 <th>Total</th>
                 <th>Avg</th>
             </tr>
-            <tr>
-                <th>19/18</th>
-                <td>12</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-            </tr>
-            <tr>
-                <th>19/18</th>
-                <td>12</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-            </tr>
-            <tr>
-                <th>19/18</th>
-                <td>12</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-            </tr>
-            <tr>
-                <th>19/18</th>
-                <td>12</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-            </tr>
-            <tr>
-                <th>19/18</th>
-                <td>12</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-                <td>55</td>
-            </tr>
+            {props.data && props.data.map(item=>{
+               return  <tr key={item}>
+                    <th>{item.year}</th>
+                    <td>{item.tackleCount}</td>
+                    <td>{item.tackleAverage}</td>
+                    <td>{item.missedCount}</td>
+                    <td>{item.missedAverage}</td>
+                    <td>{item.percentage}</td>
+                    <td>{item.toWon}</td>
+                    <td>{item.toWonAve}</td>
+                </tr>
+            })}
 
         </table>
     );
