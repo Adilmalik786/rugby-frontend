@@ -12,7 +12,7 @@ const Statistics = (props)=>{
         <div className="Statistics" >
             <h1> {props.name} </h1>
             {props.name === 'Attack' ?
-                <AttackTable/>:
+                <AttackTable data={props.data}/>:
                 props.name === 'Defence'?
                    <DefenceTable data={props.data}/> :
                     props.name === 'Errors'?

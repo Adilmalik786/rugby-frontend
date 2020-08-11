@@ -120,8 +120,7 @@ class App extends Component {
                 data: Object.values(elem.data.data)
             })
             console.log('response:', this.state.data);
-        } else
-        if (value === 'Errors') {
+        } else if (value === 'Errors') {
             console.log('stats:', value);
             const elem = await axios.get(`http://localhost:5000/api/v1/user/getErrorTable`, {
                 params: {
@@ -136,6 +135,18 @@ class App extends Component {
         } else if (value === 'SetPiece') {
             console.log('stats:', value);
             const elem = await axios.get(`http://localhost:5000/api/v1/user/getPieceTable`, {
+                params: {
+                    playerName: this.state.player,
+                    position: this.state.position
+                }
+            });
+            this.setState({
+                data: Object.values(elem.data.data)
+            })
+            console.log('response:', this.state.data);
+        } else if (value === 'Attack') {
+            console.log('stats:', value);
+            const elem = await axios.get(`http://localhost:5000/api/v1/user/getAttackTable`, {
                 params: {
                     playerName: this.state.player,
                     position: this.state.position
