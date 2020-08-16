@@ -38,7 +38,7 @@ const ButtonSizes = (props)=> {
     return (
             <div className={classes.root}>
                 <ThemeProvider theme={theme}>
-                <Button  onClick={props.clicked} className={classes.margin} variant="contained" size="small" color="primary" >
+                <Button onClick={props.clicked} className={classes.margin} disabled={!props.isSubmit} variant="contained" size="small" color="primary" >
                     {props.name}
                 </Button>
                 </ThemeProvider>

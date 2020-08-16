@@ -134,27 +134,13 @@ const PlayerName = (props) => {
             <Autocomplete
                 id="player-name"
                 size='small'
+                defaultValue={props.default ? props.default: null}
                 onChange={props.selectFilter}
                 options={props.items.map((option) => option.name)}
                 renderInput={(params) => (
                     <TextField {...params} label={props.name} margin="normal" variant="outlined"/>
                 )}
             />
-            {/* <Autocomplete
-                freeSolo
-                id="free-solo-2-demo"
-                disableClearable
-                options={playerState.players.map((option) => option.title)}
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        label="Search input"
-                        margin="normal"
-                        variant="outlined"
-                        InputProps={{...params.InputProps, type: 'search'}}
-                    />
-                )}
-                />*/}
 
         </div>
     );

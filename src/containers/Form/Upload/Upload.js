@@ -27,7 +27,7 @@ const UploadButtons = (props)=>  {
     return (
         <div className={classes.root}>
 
-            <img src={props.image} alt="Avatar" />
+                <img src={props.image} alt="Avatar" />
 
             <input accept="image/*" className={classes.input} id="icon-button-file" type="file"
             onChange={props.onImageSlection}

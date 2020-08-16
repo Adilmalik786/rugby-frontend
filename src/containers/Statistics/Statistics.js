@@ -4,6 +4,7 @@ import AttackTable from "./Tables/Attack/Attack";
 import DefenceTable from "./Tables/Defence/Defence";
 import ErrorsTable from "./Tables/Errors/Errors";
 import SetPiece from "./Tables/setPiece/setPiece";
+import Summary from "./Tables/Summary/Summary";
 
 const Statistics = (props)=>{
 
@@ -18,7 +19,9 @@ const Statistics = (props)=>{
                     props.name === 'Errors'?
                         <ErrorsTable data={props.data} /> :
                         props.name === 'SetPiece'?
-                            <SetPiece data={props.data}/> : <></>
+                            <SetPiece data={props.data}/> :
+                            props.name === 'Summary'?
+                                <Summary  data={props.data}  />:<></>
 
             }
 

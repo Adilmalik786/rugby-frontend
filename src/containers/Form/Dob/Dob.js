@@ -26,8 +26,8 @@ const Dob=(props)=> {
                 id="date"
                 label="Birthday"
                 type="date"
+                value={props.value1? props.value : null}
                 onChange={props.changeDate}
-                /*defaultValue="2019-05-24"*/
                 className={classes.textField}
                 InputLabelProps={{
                     shrink: true,

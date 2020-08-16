@@ -14,6 +14,7 @@ class Filters extends Component {
                 {name: 'Defence'},
                 {name: 'Attack'},
                 {name: 'SetPiece'},
+                {name: 'Summary'},
             ],
             Positions:[
                 {name: 'Loosehead Prop', number:[1,17]},

@@ -1,13 +1,14 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import PersonForm from './containers/Form/PersonForm'
-import Layout from "./components/Layout/Layout";
+
 import Filters from './containers/Filters/Filters';
 import CustomizedTables from './containers/Statistics/Statistics'
 import axios from 'axios';
 import logo from './logo.PNG';
-
 import photo from './img_avatar.png'
+
+
 
 class App extends Component {
 
@@ -22,28 +23,27 @@ class App extends Component {
             player: null,
             dob: null,
             age: null,
-            height: null,
-            weight: null,
-            data: null
+            height: 0,
+            weight: 0,
+            data: null,
+            isSubmit:true
 
         })
 
-        /*        this.changedWidth = this.changedWidth.bind(this);
-                this.changedHeight = this.changedHeight.bind(this);*/
+
     }
 
     componentDidMount() {
         axios.get('http://localhost:5000/api/v1/user/playersProfiles')
             .then(repos => {
                 this.setState({usersName: repos.data.data.users})
-                // console.log(this.state.usersName)
 
             });
-        console.log('asdasdad:', this.state.usersName);
+
     }
 
     OnSubmit = () => {
-        console.log('phot:', this.state.image);
+
         const data = {
             player: this.state.player,
             dob: this.state.dob,
@@ -51,49 +51,48 @@ class App extends Component {
             weight: this.state.weight,
             photo: this.state.image
         }
-        console.log('data:', data);
+
         axios.post('http://localhost:5000/api/v1/user/submitForm', {data})
             .then(res => {
-                console.log(res);
+
+
             });
 
-        console.log('clicked');
     }
     onImageSlection = (event) => {
-        //   console.log('image:', image);
-        //          console.log('filling:', event.target.files[0])
+
+
         var file = event.target.files[0];
+           console.log('filessss:', typeof file)
+        this.setState({image: file});
         const reader = new FileReader();
         var urls = reader.readAsDataURL(file);
 
         reader.onloadend = function (e) {
             const result = reader.result
-
             this.setState({image: result});
-
         }.bind(this);
         console.log(urls); // Would see a path?
-        //      console.log('file:', file)
 
-        this.setState({image: file});
-        console.log('file:', event.target.files[0]);
     }
 
     selectPlayerName = (event, value, reason) => {
 
-        axios.get(`http://localhost:5000/api/v1/user/?name=${value}`)
+
+        axios.get(`http://localhost:5000/api/v1/user/finduser?name=${value}`)
             .then(res => {
+
                 this.setState({
-                    dob: res.data.data.user.dob,
-                    age: res.data.data.user.dob,
-                    height: res.data.data.user.dob,
-                    weight: res.data.data.user.dob,
-                    photo: res.data.data.user.dob
+                    dob: res.data.data.dob,
+                    age: res.data.data.age,
+                    height: res.data.data.height,
+                    weight: res.data.data.weight,
+                    image: res.data.data.photo
                 })
-                console.log('response:', res);
+
             });
         this.setState({player: value});
-        console.log('player:', value);
+
     }
 
     changeDate = (event) => {
@@ -107,7 +106,7 @@ class App extends Component {
     }
     selectStats = async (event, value, reason) => {
         this.setState({stats: value});
-        console.log('position:', this.state.position);
+
         if (value === 'Defence') {
             console.log('stats:', value);
             const elem = await axios.get(`http://localhost:5000/api/v1/user/getDefenceTable`, {
@@ -119,9 +118,9 @@ class App extends Component {
             this.setState({
                 data: Object.values(elem.data.data)
             })
-            console.log('response:', this.state.data);
+
         } else if (value === 'Errors') {
-            console.log('stats:', value);
+
             const elem = await axios.get(`http://localhost:5000/api/v1/user/getErrorTable`, {
                 params: {
                     playerName: this.state.player,
@@ -131,9 +130,9 @@ class App extends Component {
             this.setState({
                 data: Object.values(elem.data.data)
             })
-            console.log('response:', this.state.data);
+
         } else if (value === 'SetPiece') {
-            console.log('stats:', value);
+
             const elem = await axios.get(`http://localhost:5000/api/v1/user/getPieceTable`, {
                 params: {
                     playerName: this.state.player,
@@ -143,9 +142,9 @@ class App extends Component {
             this.setState({
                 data: Object.values(elem.data.data)
             })
-            console.log('response:', this.state.data);
+
         } else if (value === 'Attack') {
-            console.log('stats:', value);
+
             const elem = await axios.get(`http://localhost:5000/api/v1/user/getAttackTable`, {
                 params: {
                     playerName: this.state.player,
@@ -155,20 +154,29 @@ class App extends Component {
             this.setState({
                 data: Object.values(elem.data.data)
             })
-            console.log('response:', this.state.data);
+
+        } else if (value === 'Summary') {
+
+            const elem = await axios.get(`http://localhost:5000/api/v1/user/getSummaryTable`, {
+                params: {
+                    playerName: this.state.player,
+                    position: this.state.position
+                }
+            });
+            this.setState({
+                data: Object.values(elem.data.data)
+            })
+
         }
 
     }
 
     changedWidth = (event) => {
         this.setState({weight: event.target.value});
-        console.log('width:', event.target.value)
-        /*this.setState({weight:event.target.value});
-        console.log(this.state.weight);*/
+
     }
     changedHeight = (event) => {
         this.setState({height: event.target.value});
-        console.log('height:', event.target.value)
     }
 
     render() {
@@ -185,6 +193,10 @@ class App extends Component {
                                 changedHeight={this.changedHeight}
                                 changedWidth={this.changedWidth}
                                 changeDate={this.changeDate}
+                                weight={this.state.weight}
+                                height={this.state.height}
+                                dob={this.state.dob}
+                                isSubmit={this.state.player}
                     />
                 </div>
                 <div className="div3">
