@@ -50,7 +50,6 @@ const Summary = (props) => {
                 <th colSpan="1">Starts*</th>
                 <th colSpan="1">Game Time</th>
                 <th colSpan="1">Score</th>
-                <th colSpan="1">TP Score</th>
                 <th colSpan="1">World Player Ranking</th>
                 <th colSpan="1">Position Ranking</th>
                 <th colSpan="1">% Ranking World</th>
@@ -60,10 +59,9 @@ const Summary = (props) => {
                 return <tr key={`${item.year}+${index}`}>
                     <th>{item.year}</th>
                     <td>{item.games}</td>
-                    <td>NaN</td>
+                    <td>{item.starts}</td>
                     <td>{item.gameTime}</td>
                     <td>{item.Score}</td>
-                    <td>NaN</td>
                     <td>NaN</td>
                     <td>NaN</td>
                     <td>NaN</td>

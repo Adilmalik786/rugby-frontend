@@ -26,7 +26,7 @@ const Dob=(props)=> {
                 id="date"
                 label="Birthday"
                 type="date"
-                value={props.value1? props.value : null}
+                value={props.value1? props.value : ''}
                 onChange={props.changeDate}
                 className={classes.textField}
                 InputLabelProps={{

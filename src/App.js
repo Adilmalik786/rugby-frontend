@@ -77,8 +77,15 @@ class App extends Component {
     }
 
     selectPlayerName = (event, value, reason) => {
-
-
+        this.setState({
+            dob: '',
+            player:null,
+            age:null,
+            height: 0,
+            weight: 0,
+            image: photo
+        })
+console.log('dob:', this.state.dob);
         axios.get(`http://localhost:5000/api/v1/user/finduser?name=${value}`)
             .then(res => {
 
