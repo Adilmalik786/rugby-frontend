@@ -24,7 +24,6 @@ const SetPiece = (props) => {
             {props.data && props.data.map((item, index) => {
                 return <tr key={`${item.year}+${index}`}>
                     <th>{item.year}</th>
-                    <th>{item.year}</th>
                     <td>{item.lineoutCount}</td>
                     <td>{item.lineoutAverage}</td>
                     <td>{item.percentage}</td>

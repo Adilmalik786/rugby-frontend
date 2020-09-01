@@ -38,8 +38,6 @@ class Filters extends Component {
             <div className="Filters">
                 <PlayerName name="Player Name" items={this.props.players} selectFilter={this.props.selectPlayerName}/>
                 <PlayerName name="Position" items={this.state.Positions} selectFilter={this.props.selectPosition}/>
-                  <PlayerName name="Statistics" items={this.state.Stats} selectFilter={this.props.selectStats}/>
-                {/*<FormPropsTextFields name="Ranking"/>*/}
             </div>
         );
     }

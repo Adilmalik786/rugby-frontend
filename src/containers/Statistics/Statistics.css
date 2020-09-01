@@ -1,8 +1,12 @@
 .Statistics{
    /*display: flex;*/
    /* align-items: center;*/
-    margin-top: 60px;
+    margin-top: 20px;
     margin-left: 20px;
     display: inline-block;
     vertical-align: center;
+}
+
+h4{
+    font-style: italic;
 }

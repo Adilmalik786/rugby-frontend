@@ -14,25 +14,11 @@ const Summary = (props) => {
             /*['Ball Carry','Metres Made','Defenders Beaten','Tackle %','Turnover Won']*/
     });
 
-    const selectOPtion1=()=>{
-
-    }
-    const selectOPtion2=()=>{
-
-    }
-    const selectOPtion3=()=>{
-
-    }
-    const selectOPtion4=()=>{
-
-    }
-    const selectOPtion5=()=>{
-
-    }
 
     return (
 
         <div>
+{/*
             <div className="Filters">
                 <PlayerName name="Select Option 1" default ='Ball Carry' items={optionsState.optionsList} selectFilter={selectOPtion1}/>
                 <PlayerName name="Select Option 2" default ='Metres Made' items={optionsState.optionsList} selectFilter={selectOPtion2}/>
@@ -40,8 +26,9 @@ const Summary = (props) => {
                 <PlayerName name="Select Option 4" default ='Tackle %' items={optionsState.optionsList} selectFilter={selectOPtion4}/>
                 <PlayerName name="Select Option 5" default ='Turnover Won' items={optionsState.optionsList} selectFilter={selectOPtion5}/>
 
-                {/*<PlayerName name="Select Option 5" items={this.state.Stats} selectFilter={this.props.selectStats}/>*/}
+                <PlayerName name="Select Option 5" items={this.state.Stats} selectFilter={this.props.selectStats}/>
             </div>
+*/}
 
         <table className="tableStyle">
             <tr>
@@ -62,10 +49,10 @@ const Summary = (props) => {
                     <td>{item.starts}</td>
                     <td>{item.gameTime}</td>
                     <td>{item.Score}</td>
-                    <td>NaN</td>
-                    <td>NaN</td>
-                    <td>NaN</td>
-                    <td>NaN</td>
+                    <td>{item.world_Ranking}/{item.max_world_ranking}</td>
+                    <td>{item.position_ranking}/{item.max_Position_ranking}</td>
+                    <td>{item.percent_world_ranking}%</td>
+                    <td>{item.percent_postion_ranking}%</td>
 
                 </tr>
             })}

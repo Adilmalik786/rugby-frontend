@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import './App.css';
 import PersonForm from './containers/Form/PersonForm'
-
+import Button from '@material-ui/core/Button';
 import Filters from './containers/Filters/Filters';
-import CustomizedTables from './containers/Statistics/Statistics'
+import CircularIndeterminate from './components/Loader/Loader';
+import CustomizedTables from './containers/Statistics/Statistics';
 import axios from 'axios';
 import logo from './logo.PNG';
 import photo from './img_avatar.png'
+import Alert from "@material-ui/lab/Alert";
 
 
 
@@ -26,8 +28,9 @@ class App extends Component {
             height: 0,
             weight: 0,
             data: null,
-            isSubmit:true
-
+            isSubmit:true,
+            loader:false,
+            alertFlag:false
         })
 
 
@@ -43,7 +46,7 @@ class App extends Component {
     }
 
     OnSubmit = () => {
-
+        this.setState({alertFlag:true});
         const data = {
             player: this.state.player,
             dob: this.state.dob,
@@ -55,15 +58,18 @@ class App extends Component {
         axios.post('http://localhost:5000/api/v1/user/submitForm', {data})
             .then(res => {
 
-
             });
+
+        setTimeout(()=>{
+            this.setState({alertFlag:false});
+        }, 3000);
 
     }
     onImageSlection = (event) => {
 
 
         var file = event.target.files[0];
-           console.log('filessss:', typeof file)
+     //      console.log('filessss:', typeof file)
         this.setState({image: file});
         const reader = new FileReader();
         var urls = reader.readAsDataURL(file);
@@ -72,7 +78,7 @@ class App extends Component {
             const result = reader.result
             this.setState({image: result});
         }.bind(this);
-        console.log(urls); // Would see a path?
+     //   console.log(urls); // Would see a path?
 
     }
 
@@ -85,7 +91,7 @@ class App extends Component {
             weight: 0,
             image: photo
         })
-console.log('dob:', this.state.dob);
+//console.log('dob:', this.state.dob);
         axios.get(`http://localhost:5000/api/v1/user/finduser?name=${value}`)
             .then(res => {
 
@@ -103,30 +109,37 @@ console.log('dob:', this.state.dob);
     }
 
     changeDate = (event) => {
-        console.log('Date:', event.target.value);
+   //     console.log('Date:', event.target.value);
         this.setState({dob: event.target.value})
     }
 
-    selectPosition = (event, value, reason) => {
+    selectPosition = async (event, value, reason) => {
         this.setState({position: value});
-        console.log('position:', value);
-    }
-    selectStats = async (event, value, reason) => {
-        this.setState({stats: value});
+   //     console.log('position:', value);
+        this.setState({data:null});
+        if(value !== null) {
+            this.setState({stats: value, loader: true, data: null});
 
-        if (value === 'Defence') {
-            console.log('stats:', value);
-            const elem = await axios.get(`http://localhost:5000/api/v1/user/getDefenceTable`, {
+            const elem = await axios.get(`http://localhost:5000/api/v1/user/getALLData`, {
                 params: {
                     playerName: this.state.player,
-                    position: this.state.position
+                    position: value
                 }
             });
+      //      console.log('elem:', elem);
             this.setState({
-                data: Object.values(elem.data.data)
+                data: elem.data,
+                loader: false
+                //  data: Object.values(elem.data.data)
             })
+     //       console.log('elem:', this.state.data);
+        }
+    }
+    selectStats = async (event, value, reason) => {
 
-        } else if (value === 'Errors') {
+
+
+        /*else if (value === 'Errors') {
 
             const elem = await axios.get(`http://localhost:5000/api/v1/user/getErrorTable`, {
                 params: {
@@ -174,7 +187,7 @@ console.log('dob:', this.state.dob);
                 data: Object.values(elem.data.data)
             })
 
-        }
+        }*/
 
     }
 
@@ -190,7 +203,9 @@ console.log('dob:', this.state.dob);
         return (
 
             <div className="parent">
+
                 <div className="div1">
+                    {this.state.alertFlag ? <Alert severity="success">Form Submitted !</Alert> : <></>}
                     <img src={logo}/>
                 </div>
                 <div className="div2">
@@ -209,11 +224,18 @@ console.log('dob:', this.state.dob);
                 <div className="div3">
                     <Filters players={this.state.usersName} selectPlayerName={this.selectPlayerName}
                              selectPosition={this.selectPosition}
-                             selectStats={this.selectStats}
+
                     />
+                    <Button className="print"    onClick={window.print} variant="contained" size="small" color="primary">
+                        Print
+                    </Button>
                 </div>
                 <div className="div4">
-                    <CustomizedTables name={this.state.stats} data={this.state.data}/>
+                    {this.state.data !== null ?
+                        <CustomizedTables data={this.state.data}/>:
+                        this.state.loader ?
+                        <CircularIndeterminate/>: <></>
+                    }
                 </div>
             </div>
         );
